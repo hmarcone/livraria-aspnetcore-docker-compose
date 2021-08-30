@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  livraria:
+    image: ${DOCKER_REGISTRY-}livraria
+    build:
+      context: .
+      dockerfile: Livraria/Dockerfile

@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  mssql-server:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      ACCEPT_EULA: "Y"   
+      SA_PASSWORD: "numsey#2021"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433" 
+    volumes:
+      - C:\Data\volumes\sqlserver:/var/opt/mssql/data
+
+  livraria:
+    environment:
+      - DbServer=mssql-server
+      - DbPort=1433
+      - DbUser="SA"
+      - Password="numsey#2021"
+      - Database="LivrosDb"
+      - ASPNETCORE_ENVIRONMENT=Development
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8090:80"
+      #- "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
